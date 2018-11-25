@@ -1,0 +1,20 @@
+- id: '1534879696217'
+  alias: Fasad Tänd
+  trigger:
+  - platform: sun
+    event: sunset
+  - platform: time
+    at: '05:10:00'
+  action:
+    service: scene.turn_on
+    entity_id: scene.GardenOn
+- id: '1534879764580'
+  alias: Fasad Släck
+  trigger:
+  - platform: sun
+    event: sunrise
+  - platform: time
+    at: '23:00:00'
+  action:
+    service: scene.turn_on
+    entity_id: scene.GardenOff
