@@ -10,169 +10,127 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Stockholm
-  # Customization file
+  #Customize
   customize: !include customize.yaml
-
-hassio:
-
-# Show links to resources in log and frontend
-#introduction:
-
-# Enables the frontend
-frontend:
-
-# Enables configuration UI
-config:
-
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
-
-# Checks for available updates
-# Note: This component will send some information about your system to
-# the developers to assist with development of Home Assistant.
-# For more information, please see:
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  # include_used_components: true
-
-# Discover some devices automatically
-#discovery:
-
-# Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-
-# Enables support for tracking state changes over time
-history:
-
-# View all events in a logbook
-logbook:
-
-# Enables a map showing the location of tracked devices
-#map:
-
-# Track the sun
-sun:
-
-# Sensors
-sensor:
-  # Weather prediction
-  - platform: yr
-    monitored_conditions:
-      - symbol
-      - humidity
-      - temperature
-  - platform: time_date
-    display_options:
-      - 'time'
-      - 'time_utc'
-
-# Text to speech
-tts:
-  - platform: google
-
-# Cloud
-cloud:
-
+  
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 
+hassio:
+frontend:
+config:
+updater:
+history:
+logbook:
+sun:
+
+
+# Text to speech
+#tts:
+#  - platform: google
+
+# Cloud
+cloud:
 
 panel_iframe:
   configurator:
     title: Configurator
     icon: mdi:wrench
-    url: http://hassio.local:3218
-    
-light:
-  platform: mqtt
-  name: 'Fasad'
-  entity_id: '/fasadljus'
-  state_topic: '/ESPEbba/Relay1/RL2'
-  command_topic: '/ESPEbba/gpio/5'
-  payload_on: "1"
-  payload_off: "0"
-  
-light 2:
-  platform: mqtt
-  name: 'HouseWindow1'
-  entity_id: '/house_window1'
-  state_topic: '/ELC1_1/Light/Window'
-  command_topic: '/ELC1_1/gpio/12'
-  payload_on: "1"
-  payload_off: "0"
-  
-light 3:
-  platform: mqtt
-  name: 'GarageFasad'
-  entity_id: '/garage_fasad'
-  state_topic: '/ELCG_1/Light/Fasad'
-  command_topic: '/ELCG_1/gpio/12'
-  payload_on: "1"
-  payload_off: "0"
-  
-light 4:
-  platform: mqtt
-  name: 'EbbaFasad'
-  entity_id: '/ebba_fasad'
-  state_topic: '/ELCebba1/Light/Fasad'
-  command_topic: '/ELCebba1/gpio/12'
-  payload_on: "1"
-  payload_off: "0"
-  
-sensor 2:
-  platform: mqtt
-  name: 'EbbaRSSI'
-  entity_id: '/ebbarssi'
-  state_topic: '/ESPEbba/WiFi/RSSI'
+    url: http://192.168.111.211:3218
 
-sensor 3:
-  platform: mqtt
-  name: 'ELC1_1RSSI'
-  entity_id: '/elc11rssi'
-  state_topic: '/ELC1_1/WiFi/RSSI'
-
-sensor 4:
-  platform: mqtt
-  name: 'ELCG_1RSSI'
-  entity_id: '/elcg1rssi'
-  state_topic: '/ELCG_1/WiFi/RSSI'
-
-sensor 5:
-  platform: mqtt
-  name: 'ELCebba_1RSSI'
-  entity_id: '/elcebba1rssi'
-  state_topic: '/ELCebba1/WiFi/RSSI'
-
-sensor 6:
-  platform: mqtt
-  name: 'HouseTempELC1'
-  entity_id: '/housetempelc1'
-  state_topic: '/ELC1_1/Temp/ELC1'
-
-sensor 7:
-  platform: mqtt
+sensor:
+- platform: yr
+  monitored_conditions:
+  - symbol
+  - humidity
+  - temperature
+- platform: time_date
+  display_options:
+  - 'time'
+  - 'time_utc'
+- platform: mqtt
+  name: 'ESP01rssi'
+  state_topic: '/ESP01/wifi/RSSI'
+- platform: mqtt
+  name: 'ESP02rssi'
+  state_topic: '/ESP02/wifi/RSSI'
+- platform: mqtt
+  name: 'ESP03rssi'
+  state_topic: '/ESP03/wifi/RSSI'
+- platform: mqtt
+  name: 'ESP04rssi'
+  state_topic: '/ESP04/wifi/RSSI'
+- platform: mqtt
+  name: 'ESP05rssi'
+  state_topic: '/ESP05/wifi/RSSI'
+- platform: mqtt
   name: 'GarageTempELC'
-  entity_id: '/garagetempelc1'
-  state_topic: '/ELCG_1/Temp/Garage'
-
-sensor 8:
-  platform: mqtt
-  name: 'EbbaTempELC'
-  entity_id: '/ebbatempelc1'
-  state_topic: '/ELCebba1/Temp/Lager'
+  state_topic: '/ESP04/Temp/ELC1'
+- platform: mqtt
+  name: 'HouseTempELC1'
+  state_topic: '/ESP05/Temp/Garage'
+   
+light:
+- platform: mqtt
+  name: 'EbbaFasad'
+  state_topic: '/ESP01/Relay/RL1'
+  command_topic: '/ESP01/gpio/12'
+  payload_on: "1"
+  payload_off: "0" 
+  state_on: "1"
+  state_off: "0"
+#  retain: true
+- platform: mqtt
+  name: 'ESP02_RL'
+  state_topic: '/ESP02/Relay/RL1'
+  command_topic: '/ESP02/gpio/12'
+  payload_on: "1"
+  payload_off: "0" 
+  state_on: "1"
+  state_off: "0"
+#  retain: true
+- platform: mqtt
+  name: 'ESP03_RL'
+  state_topic: '/ESP03/Relay/RL1'
+  command_topic: '/ESP03/gpio/12'
+  payload_on: "1"
+  payload_off: "0" 
+  state_on: "1"
+  state_off: "0"
+  retain: true
+- platform: mqtt
+  name: 'GarageFasad'
+  state_topic: '/ESP04/Relay/RL1'
+  command_topic: '/ESP04/gpio/12'
+  payload_on: "1"
+  payload_off: "0"
+  state_on: "1"
+  state_off: "0"
+  retain: true
+- platform: mqtt
+  name: 'HouseWindow1'
+  state_topic: '/ESP05/Relay/RL1'
+  command_topic: '/ESP05/gpio/12'
+  payload_on: "1"
+  payload_off: "0"
+  state_on: "1"
+  state_off: "0"
+  retain: true
 
 scene:
   - name: GardenOn
     entities:
-      light.fasad: on
+      light.EbbaFasad: on
+      light.ESP02_RL: on
+      light.ESP03_RL: on
       light.HouseWindow1: on
       light.GarageFasad: on
   - name: GardenOff
     entities:
-      light.fasad: off
+      light.EbbaFasad: off
+      light.ESP02_RL: off
+      light.ESP03_RL: off
       light.HouseWindow1: off
       light.GarageFasad: off
   
